@@ -14,7 +14,7 @@ export class Tab1Page {
   timelinePage = 1;
 
   constructor(private api: TweetService) {
-    this.generateItems();
+   this.generateItems();
   }
 
   private generateItems() {

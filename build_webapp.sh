@@ -17,7 +17,7 @@ ionic build --prod
 
 
 #firebase deployment configuration
-#firebase deploy
+firebase deploy
 
 echo "----- Deployment completed. -----"
 
