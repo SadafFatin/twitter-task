@@ -23,8 +23,8 @@ export class LogInComponent {
     private b: BaseHelper
   ) {
     this.form = this.formBuilder.group({
-      email: ['shoumick922@gmail.com', Validators.pattern(emailPattern)],
-      password: ['shoumick@1', Validators.pattern(passPattern)]
+      email: ['', Validators.pattern(emailPattern)],
+      password: ['', Validators.pattern(passPattern)]
     });
   }
 

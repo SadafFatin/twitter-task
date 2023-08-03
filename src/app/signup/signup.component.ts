@@ -26,8 +26,8 @@ export class SignupComponent {
     this.form = this.formBuilder.group(
       {
         username: ['', Validators.pattern(usernamePattern)],
-        email: ['shoumick922@gmail.com', Validators.pattern(emailPattern)],
-        password: ['shoumick@1', Validators.pattern(passPattern)],
+        email: ['', Validators.pattern(emailPattern)],
+        password: ['', Validators.pattern(passPattern)],
         confirmpassword: new FormControl(null, [
           (c: AbstractControl) => Validators.required(c),
           Validators.pattern(passPattern),
