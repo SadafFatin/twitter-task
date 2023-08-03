@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">twitter</string>
     <string name="title_activity_main">twitter</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">io.twitter.ionic</string>
+    <string name="custom_url_scheme">io.twitter.ionic</string>
 </resources>

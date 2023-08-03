@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Unleash Your Thoughts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size-lg="4" size-md="7" size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-icon name="chatbox-ellipses" size="large"></ion-icon>
+            <ion-card-subtitle>
+            </ion-card-subtitle>
+            <ion-card-title>Make Tweet</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form class="form" (submit)="onSubmit()" [formGroup]="form">
+
+              <ion-input label-placement="floating" fill="outline" label="Enter tweet content" formControlName="content" errorText="{{errorMessage.content.message}}" required [clearInput]="true" placeholder="Express your thoughts within 160 character" [counter]="true" maxlength="160"></ion-input>
+
+              <ion-button type="submit" shape="round">Tweet
+                <ion-icon name="send" slot="end"></ion-icon>
+              </ion-button>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

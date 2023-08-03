@@ -1,4 +1,3 @@
-import { User } from 'src/app/models/user';
 //import {
 //   LoadingController,
 //   MenuController,
@@ -114,7 +113,7 @@ export class BaseHelper {
   async setStorage(key: string, value: any) {
     await Preferences.set({
       key,
-      value: JSON.stringify(value),
+      value,
     });
   }
   async getStorage(key: string) {
@@ -164,7 +163,7 @@ export class BaseHelper {
 
 
 
-  getMenuConfig(currentUser: User) {
+  getMenuConfig(currentUser: any) {
     // if (currentUser) {
     //   const storeKeeperPages = [
     //     {

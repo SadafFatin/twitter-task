@@ -39,6 +39,7 @@ export class LogInComponent {
       this.authService.login(this.form.value)
         .subscribe({
           next: (response) => {
+            console.log(response.token);
             this.b.login(response.token);
           }
         });

@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      TimeLine
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment" mode="md" #segmentcontrol>
+      <ion-segment-button value="home">
+        <ion-label>Home</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="content">
+        <ion-label>Suggestion</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div [hidden]="segment !== 'home'">
+    <!-- Stoy section at the top -->
+    <!-- <ion-slides [options]="opts">
+                <ion-slide *ngFor="let tweet of tweets">
+                  <ion-avatar>
+                    <img [src]="tweet.img">
+                  </ion-avatar>
+                </ion-slide>
+              </ion-slides> -->
+
+    <!-- List of Tweets -->
+    <!-- <app-tweet *ngFor="let tweet of tweets" [tweet]="tweet"></app-tweet> -->
+    <ion-list>
+      <!-- <ion-item *ngFor="let item of myTimeLineTweets; let index">
+          <ion-avatar slot="start">
+            <img [src]="'https://picsum.photos/80/80?random=' + index" alt="avatar" />
+          </ion-avatar>
+          <ion-label>{{ item }}</ion-label>
+        </ion-item> -->
+      <app-tweet *ngFor="let tweet of myTimeLineTweets" [tweet]="tweet"></app-tweet>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="/tabs/tweet">
+    <ion-fab-button>
+      <ion-icon name="pencil"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div [hidden]="segment !== 'content'">
+    Other content
+  </div>
+
+</ion-content>

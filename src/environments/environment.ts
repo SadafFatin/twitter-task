@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
-  development: false
+  production: false,
+  development: true
 };
 export const domain = 'https://missingdata.pythonanywhere.com/';

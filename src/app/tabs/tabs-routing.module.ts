@@ -8,20 +8,29 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'timeline',
+        loadChildren: () => import('../timeline/tab1.module').then(m => m.Tab1PageModule)
       },
       {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        path: 'search',
+        loadChildren: () => import('../search/tab2.module').then(m => m.Tab2PageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'profile',
+        loadChildren: () => import('../profile/tab3.module').then(m => m.Tab3PageModule)
       },
+      {
+        path: 'tweet',
+        loadChildren: () => import('../tweet/tab4.module').then(m => m.Tab4PageModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('../users/tab5.module').then(m => m.Tab5PageModule)
+      },
+
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/timeline',
         pathMatch: 'full'
       }
     ]
@@ -30,6 +39,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/tabs/tab1',
     pathMatch: 'full'
+  },
+  {
+    path: 'tab4',
+    loadChildren: () => import('../tweet/tab4.module').then(m => m.Tab4PageModule)
   }
 ];
 

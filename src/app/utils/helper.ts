@@ -21,6 +21,11 @@ export const errorMsgs = {
     type: 'pattern',
     message: 'Passwords don\'t match',
   },
+  content:
+  {
+    type: 'pattern',
+    message: 'Provide a valid tweet',
+  },
   inf_id: [
     {
       type: 'required',
@@ -182,3 +187,13 @@ export const numberPattern = '[0-9]{1,}.*[0-9]{0,}';
 
 
 export const SUCCESS_API_MESSAGE = "successful";
+export const MAPKEY_TWEETS = "tweets";
+
+export const MAPKEY_MYTWEETS = "my-tweets";
+export const MAPKEY_FOLLOWERS = "followers";
+export const MAPKEY_FOLLOWINGS = "following";
+
+export const ARRAYKEY_FOLLOWINGS = "followings";
+export const ARRAYKEY_FOLLOWERS = "followers";
+export const ARRAYKEY_TWEET = "tweets";
+export const ARRAYKEY_MYTWEET = "my_tweets";

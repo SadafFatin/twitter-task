@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Profile</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment" mode="md" #segmentcontrol (ngModelChange)="generateItems()">
+      <ion-segment-button value="my-tweets">
+        <ion-label>Tweets</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="followers">
+        <ion-label>Followers</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="following">
+        <ion-label>Following</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div *ngIf="segment === 'my-tweets'">
+
+    <!-- List of Tweets -->
+    <ion-list>
+      <ion-list-header>Tweets found: {{viewMap.get(segment)?.content?.length}}</ion-list-header>
+      <app-tweet *ngFor="let tweet of viewMap.get(segment)?.content" [tweet]="tweet"></app-tweet>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+  <div *ngIf="segment === 'followers'">
+    <ion-list>
+      <ion-list-header>Followers found: {{viewMap.get(segment)?.content?.length}}</ion-list-header>
+      <app-user *ngFor="let content of viewMap.get(segment)?.content" [user]="content" [detail]="false"></app-user>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+  <div *ngIf="segment === 'following'">
+    <ion-list>
+      <ion-list-header>Followings found: {{viewMap.get(segment)?.content?.length}}</ion-list-header>
+      <app-user *ngFor="let content of viewMap.get(segment)?.content" [user]="content" [unfollowCheck]="true"></app-user>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+
+
+
+</ion-content>

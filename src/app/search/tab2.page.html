@@ -1,0 +1,32 @@
+<ion-header >
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Users
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar mode="ios" placeholder="ID/Name"  [debounce]="2500" (ionInput)="handleInput($event)"
+
+    [ngModel]="token"></ion-searchbar>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <!-- List of Tweets -->
+    <ion-list >
+      <ion-list-header>
+        <ion-label>Users found: {{users.length}}
+        </ion-label>
+        </ion-list-header>
+      <app-user *ngFor="let user of users" [user]="user"></app-user>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+      <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

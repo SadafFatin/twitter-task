@@ -8,8 +8,8 @@ import {
   HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { Observable, from, throwError } from 'rxjs';
+import { map, catchError, tap, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BaseHelper } from './baseHelper';
 import { environment } from 'src/environments/environment';
@@ -21,79 +21,71 @@ export class TokenInterceptor implements HttpInterceptor {
   token: string | null | undefined;
 
   constructor(private b: BaseHelper) {
-    this.loadToken();
+
   }
 
-  async loadToken() {
-    if (!this.token) {
-      this.token = (await this.b.getStorage(this.b.USER_DATA)).value;
-    }
-  }
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
 
+    const getResult = (this.b.getStorage(this.b.USER_DATA));
 
-    this.b.loadLoading(true);
-    console.log('<<--------HttpEvent-------->>>');
-    if (this.token) {
-      request = request.clone({
-        setHeaders: {
-          'X-Jwt-Token': 'Bearer ' + this.token,
-        },
-      });
-    }
-    // if (!request.headers.has('Content-Type')) {
-    //   request = request.clone({
-    //     setHeaders: {
-    //       'content-type': 'application/json',
-    //     },
-    //   });
-    // }
-    // request = request.clone({
-    //   headers: request.headers.set('Accept', 'application/json'),
-    // });
+    return from(getResult)
+      .pipe(
 
-    return next.handle(request).pipe(
-      map((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
-          if (environment.development) {
-            console.log('<<--------HttpResponse-------->>>\n', event);
+        switchMap((getResult) => {
+          this.token = getResult.value;
+          console.log(this.token);
+          this.b.loadLoading(true);
+          console.log('<<--------HttpEvent-------->>>');
+          if (this.token || true) {
+            request = request.clone({
+              setHeaders: {
+                'X-Jwt-Token': 'Bearer ' + this.token?.toString(),
+              },
+            });
           }
-          this.b.loadLoading(false);
-        }
-        return event;
-      }),
-      catchError((error: HttpErrorResponse) => {
-        if (environment.development) {
-          console.log('<<--------HttpErrorResponse-------->>>\n', error);
-        }
-        this.b.loadLoading(false);
-        return throwError(error);
-      })
+          if (!request.headers.has('Content-Type')) {
+            request = request.clone({
+              setHeaders: {
+                'content-type': 'application/json',
+              },
+            });
+          }
+          request = request.clone({
+            headers: request.headers.set('Accept', 'application/json'),
+          });
+
+          return next.handle(request).pipe(
+            map((event: HttpEvent<any>) => {
+              if (event instanceof HttpResponse) {
+                if (environment.development) {
+                  console.log('<<--------HttpResponse-------->>>\n', event);
+                }
+                this.b.loadLoading(false);
+                if(event?.body.error === 'Invalid or Expired JWT'){
+                  this.b.logout();
+                  return event;
+                }
+              }
+
+              return event;
+            }),
+            catchError((error: HttpErrorResponse) => {
+              if (environment.development) {
+                console.log('<<--------HttpErrorResponse-------->>>\n', error);
+              }
+              this.b.loadLoading(false);
+              return throwError(error);
+            })
+          );
+
+        })
+
     );
   }
-
-
-
 }
 
 
-
-
-      // retryWhen((error) =>
-      //   error.pipe(
-      //     mergeMap((errorItem, index) => {
-      //       if (index < maxRetries) {
-      //         console.log('Failed request found and retrying');
-      //         return of(error).pipe(
-      //           tap((err: any) => console.log(`Retrying ${err.url}. Retry count ${index + 1}`)),
-      //           delay(delayMs)
-      //         );
-      //       }
-      //       throw errorItem;
-      //     })
-      //   )
-      // ),
