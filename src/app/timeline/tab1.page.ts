@@ -20,7 +20,6 @@ export class Tab1Page {
   private generateItems() {
     this.api.myTimeLine(this.timelinePage).subscribe({
       next: (result) => {
-        console.log(result);
         this.myTimeLineTweets = this.myTimeLineTweets.concat(result.timeline);
         this.timelinePage++;
       }
